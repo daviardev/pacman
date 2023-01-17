@@ -16,9 +16,14 @@ let createRect = (x, y, width, height, color) => {
 }
 
 const fps = 30
+
 const oneBlocksSize = 20
+const wallSpaceWidth = oneBlocksSize / 1.6
+const wallOffset = (oneBlocksSize - wallSpaceWidth) / 2
 
 const wallColor = '#342dca'
+const background = '#000000'
+const wallInnerColor = '#000000'
 
 const map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -56,6 +61,7 @@ const update = () => {
 }
 
 const draw = () => {
+    createRect(0, 0, canvas.width, canvas.height, background)
     drawWalls()
 }
 
@@ -63,14 +69,55 @@ const gameInterval = setInterval(gameLoop, 1000 / fps)
 
 const drawWalls = () => {
     for (let i = 0; i < map.length; i++) {
-        for (let x = 0; x < map[0].length; x++) {
-            map[i][x] === 1 && createRect(
-                x * oneBlocksSize,
-                i * oneBlocksSize,
-                oneBlocksSize,
-                oneBlocksSize,
-                wallColor
-            )
+        for (let j = 0; j < map[0].length; j++) {
+            if (map[i][j] == 1) {
+                createRect(
+                    j * oneBlocksSize,
+                    i * oneBlocksSize,
+                    oneBlocksSize,
+                    oneBlocksSize,
+                    wallColor
+                );
+                if (j > 0 && map[i][j - 1] == 1) {
+                    createRect(
+                        j * oneBlocksSize,
+                        i * oneBlocksSize + wallOffset,
+                        wallSpaceWidth + wallOffset,
+                        wallSpaceWidth,
+                        wallInnerColor
+                    );
+                }
+
+                if (j < map[0].length - 1 && map[i][j + 1] == 1) {
+                    createRect(
+                        j * oneBlocksSize + wallOffset,
+                        i * oneBlocksSize + wallOffset,
+                        wallSpaceWidth + wallOffset,
+                        wallSpaceWidth,
+                        wallInnerColor
+                    );
+                }
+
+                if (i < map.length - 1 && map[i + 1][j] == 1) {
+                    createRect(
+                        j * oneBlocksSize + wallOffset,
+                        i * oneBlocksSize + wallOffset,
+                        wallSpaceWidth,
+                        wallSpaceWidth + wallOffset,
+                        wallInnerColor
+                    );
+                }
+
+                if (i > 0 && map[i - 1][j] == 1) {
+                    createRect(
+                        j * oneBlocksSize + wallOffset,
+                        i * oneBlocksSize,
+                        wallSpaceWidth,
+                        wallSpaceWidth + wallOffset,
+                        wallInnerColor
+                    );
+                }
+            }
         }
     }
 }
