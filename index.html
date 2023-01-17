@@ -7,7 +7,16 @@
     <title>Pacman | Game make with Vanilla</title>
   </head>
   <body>
+    <canvas id='canvas' width='500' height='500'>
+
+    </canvas>
+      <div style='display: none'>
+        <img id='animations' src='animations-pacman.gif' alt='pacman' />
+        <img id='ghosts' src='ghosts.png' alt='ghosts' />
+      </div>
     <div id='app' />
     <script type='module' src='/main.js'></script>
+    <script src='src/game/ghosts.js'></script>
+    <script src='src/game/player.js'></script>
   </body>
 </html>
