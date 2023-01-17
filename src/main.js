@@ -5,6 +5,8 @@ import './style.css'
 const canvas = $('#canvas')
 const canvasContext = canvas.getContext('2d')
 
+console.log('evolusion')
+
 const ghostsFrames = $('#ghosts')
 const pacmanFrames = $('#animations')
 
@@ -14,6 +16,9 @@ let createRect = (x, y, width, height, color) => {
 }
 
 const fps = 30
+const oneBlocksSize = 20
+
+const wallColor = '#342dca'
 
 const map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -55,5 +60,19 @@ const draw = () => {
 }
 
 const gameInterval = setInterval(gameLoop, 1000 / fps)
+
+const drawWalls = () => {
+    for (let i = 0; i < map.length; i++) {
+        for (let x = 0; x < map[0].length; x++) {
+            map[i][x] === 1 && createRect(
+                x * oneBlocksSize,
+                i * oneBlocksSize,
+                oneBlocksSize,
+                oneBlocksSize,
+                wallColor
+            )
+        }
+    }
+}
 
 $('#app')
